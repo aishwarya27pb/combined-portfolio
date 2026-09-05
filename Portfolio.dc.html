@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/organic-845ef4e9-ea1d-4791-a024-22f891c1681e/styles.css">
+  <script src="_ds/organic-845ef4e9-ea1d-4791-a024-22f891c1681e/_ds_bundle.js"></script>
+  <style>
+    @keyframes floatSlow { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-16px) rotate(6deg); } }
+    @keyframes floatSlow2 { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(14px) rotate(-8deg); } }
+    @keyframes blobPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes ringPulse { 0% { box-shadow: 0 0 0 0 rgba(198,113,57,0.45); } 100% { box-shadow: 0 0 0 16px rgba(198,113,57,0); } }
+    @keyframes shimmer { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+    body { margin: 0; background: var(--color-bg); overflow-x: hidden; }
+    .stage-wrap { perspective: 2600px; }
+    .flip-inner { transform-style: preserve-3d; transition: transform 1.15s cubic-bezier(.65,.05,.24,1); }
+    .face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .face-back { transform: rotateY(180deg); }
+    .blob { animation: blobPulse 8s ease-in-out infinite; }
+    .note-blob { animation: floatSlow 7s ease-in-out infinite; }
+    .note-blob2 { animation: floatSlow2 6s ease-in-out infinite; }
+    .fade-in { animation: fadeUp 0.7s ease both; }
+    .flip-btn-ring { animation: ringPulse 2.4s ease-out infinite; }
+    .grad-text {
+      background: linear-gradient(100deg, var(--color-accent-600), var(--color-accent-2-600), var(--color-accent-600));
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: shimmer 5s linear infinite;
+    }
+    .skill-track { position: relative; height: 10px; border-radius: 999px; background: var(--track-bg); overflow: hidden; }
+    .skill-fill { position: absolute; top:0; left:0; height:100%; border-radius: 999px; transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
+    .tilt-card { transition: transform 0.35s ease, box-shadow 0.35s ease; }
+    .tilt-card:hover { transform: translateY(-6px) scale(1.02); }
+    @keyframes vinylSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes eqBounce { 0%,100% { transform: scaleY(0.3); } 50% { transform: scaleY(1); } }
+    .vinyl { animation: vinylSpin 6s linear infinite; }
+    .eq-bar { animation: eqBounce 1.1s ease-in-out infinite; transform-origin: bottom; }
+    .app-root { --surface: #fff; --label-color: var(--color-neutral-700); --body-color: var(--color-neutral-800); --track-bg: var(--color-neutral-200); --accent-text: var(--color-accent-700); --accent-num: var(--color-accent-600); --blob-1: var(--color-accent-100); --blob-2: var(--color-accent-2-100); --page-tint-1: var(--color-accent-100); --page-tint-2: var(--color-accent-2-100); transition: background 0.4s ease, color 0.4s ease; }
+    .app-root[data-theme="dark"] { --color-bg: var(--color-neutral-900); --color-text: var(--color-neutral-100); --surface: var(--color-neutral-800); --label-color: var(--color-neutral-300); --body-color: var(--color-neutral-200); --track-bg: var(--color-neutral-700); --accent-text: var(--color-accent-300); --accent-num: var(--color-accent-300); --blob-1: var(--color-accent-800); --blob-2: var(--color-accent-2-800); --page-tint-1: var(--color-accent-900); --page-tint-2: var(--color-accent-2-900); }
+    .app-root[data-theme="dark"] .face:not(.face-back) .card,
+    .app-root[data-theme="dark"] .face:not(.face-back) .tag-neutral { background: var(--color-neutral-700) !important; color: var(--color-neutral-100) !important; }
+    .app-root[data-theme="dark"] .face:not(.face-back) .card-body { color: var(--color-neutral-300) !important; }
+    .theme-toggle-btn { transition: background 0.3s ease; }
+    .app-root { --sing-100: var(--color-accent-2-100); --sing-200: var(--color-accent-2-200); --sing-800: var(--color-accent-2-800); --sing-900: var(--color-accent-2-900); }
+    .app-root[data-swap="true"] { --sing-100: var(--color-accent-100); --sing-200: var(--color-accent-200); --sing-800: var(--color-accent-800); --sing-900: var(--color-accent-900); --blob-1: var(--color-accent-2-100); --blob-2: var(--color-accent-100); --accent-text: var(--color-accent-2-700); --accent-num: var(--color-accent-2-600); }
+    .app-root[data-swap="true"][data-theme="dark"] { --accent-text: var(--color-accent-2-300); --accent-num: var(--color-accent-2-300); --blob-1: var(--color-accent-2-800); --blob-2: var(--color-accent-800); }
+    .app-root[data-motion="calm"] .blob, .app-root[data-motion="calm"] .note-blob, .app-root[data-motion="calm"] .note-blob2, .app-root[data-motion="calm"] .vinyl, .app-root[data-motion="calm"] .eq-bar, .app-root[data-motion="calm"] .grad-text, .app-root[data-motion="calm"] .flip-btn-ring { animation: none !important; }
+    .app-root[data-motion="calm"] .tilt-card:hover { transform: none; }
+  </style>
+</helmet>
+<audio ref="{{ audioRef }}" loop preload="none"></audio>
+<div class="app-root" data-theme="{{ theme }}" data-swap="{{ swapAttr }}" data-motion="{{ motionAttr }}" style="min-height:100vh; background:radial-gradient(1200px 700px at 85% -10%, var(--page-tint-1), transparent), radial-gradient(900px 600px at -10% 100%, var(--page-tint-2), transparent), var(--color-bg); font-family:var(--font-body); color:var(--color-text); padding: var(--space-6) var(--space-4); box-sizing:border-box; position:relative;">
+
+  <div style="max-width:1180px; margin:0 auto; position:relative;">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:var(--space-4); flex-wrap:wrap; margin-bottom:var(--space-6);">
+      <div>
+        <div style="font-family:var(--font-heading); font-size:18px; line-height:1;">Aishwarya P B</div>
+        <div style="font-size:13px; color:var(--label-color);">{{ sideLabel }}</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button onClick="{{ toggleDark }}" aria-label="Toggle dark mode" class="theme-toggle-btn" style="display:flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:999px; border:2px solid var(--color-accent-300); background:var(--surface); color:var(--color-accent-700); font-size:19px; cursor:pointer;" style-hover="background:var(--color-accent-100);">
+          <span>{{ themeIcon }}</span>
+        </button>
+        <div style="position:relative;">
+          <div class="flip-btn-ring" style="position:absolute; inset:0; border-radius:999px; pointer-events:none;"></div>
+          <button onClick="{{ toggleFlip }}" style="position:relative; display:flex; align-items:center; gap:8px; border:none; cursor:pointer; background:var(--color-accent-500); color:white; font-family:var(--font-body); font-weight:700; font-size:15px; padding:13px 24px; border-radius:999px; box-shadow:var(--shadow-md);" style-hover="background:var(--color-accent-600);" style-active="background:var(--color-accent-700);">
+            <span>{{ flipButtonLabel }}</span>
+            <span style="font-size:19px;">⟲</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage-wrap" style="width:100%;">
+      <div class="flip-inner" ref="{{ innerRef }}" style="position:relative; width:100%; min-height:1500px;">
+
+        <!-- FRONT: TECH RESUME -->
+        <div class="face" style="position:absolute; inset:0; width:100%; opacity:{{ frontOpacity }}; z-index:{{ frontZ }}; pointer-events:{{ frontPointer }};">
+          <div style="background:var(--surface); color:var(--color-text); border-radius:var(--radius-lg); box-shadow:var(--shadow-lg); padding:var(--space-6); position:relative; overflow:hidden;">
+            <div class="blob" style="position:absolute; top:-70px; right:-70px; width:240px; height:240px; border-radius:999px; background:var(--blob-1); opacity:0.7;"></div>
+            <div class="blob" style="position:absolute; bottom:120px; left:-50px; width:140px; height:140px; border-radius:999px; background:var(--blob-2); opacity:0.6; animation-delay:2s;"></div>
+
+            <div class="fade-in" style="position:relative; z-index:1; margin-bottom:var(--space-6);">
+              <div class="tag tag-accent" style="margin-bottom:var(--space-3);">Technical Portfolio</div>
+              <h1 class="grad-text" style="font-family:var(--font-heading); font-size:32px; margin:0 0 8px 0;">Aishwarya P B</h1>
+              <div style="font-size:16px; color:var(--accent-text); font-weight:700; margin-bottom:var(--space-3);">QA Engineer · Automation &amp; Manual Testing</div>
+              <p style="font-size:15px; line-height:1.6; color:var(--body-color); max-width:560px; margin:0;">
+                6+ years delivering zero-defect releases across banking, insurance, airline and ed-tech platforms — Playwright, Selenium, TypeScript, API and CI/CD testing.
+              </p>
+            </div>
+
+            <div class="fade-in" style="position:relative; z-index:1; display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-3); max-width:420px; margin-bottom:var(--space-6);">
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-heading); font-size:24px; color:var(--accent-num);">6+</div>
+                <div style="font-size:13px; color:var(--label-color);">Years</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-heading); font-size:24px; color:var(--accent-num);">7+</div>
+                <div style="font-size:13px; color:var(--label-color);">Projects</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-heading); font-size:24px; color:var(--accent-num);">4</div>
+                <div style="font-size:13px; color:var(--label-color);">Mentored</div>
+              </div>
+            </div>
+
+            <div style="position:relative; z-index:1; margin-bottom:var(--space-6);">
+              <h2 style="font-family:var(--font-heading); font-size:19px; margin:0 0 var(--space-4) 0;">Skills</h2>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:var(--space-4);">
+                <sc-for list="{{ skills }}" as="skill" hint-placeholder-count="6">
+                  <div>
+                    <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:600; margin-bottom:6px;">
+                      <span>{{ skill.name }}</span><span style="color:var(--accent-num);">{{ skill.pct }}%</span>
+                    </div>
+                    <div class="skill-track">
+                      <div class="skill-fill" style="width:{{ skill.width }}; background:linear-gradient(90deg, var(--color-accent-400), var(--color-accent-600));"></div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="position:relative; z-index:1; display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:var(--space-4); margin-bottom:var(--space-6);">
+              <h2 style="font-family:var(--font-heading); font-size:19px; margin:0; grid-column:1/-1;">Projects</h2>
+              <sc-for list="{{ projects }}" as="proj" hint-placeholder-count="4">
+                <div class="card elev-sm tilt-card" style="overflow:hidden; padding:0;">
+                  <div style="height:110px; background:var(--color-accent-2-100); display:flex; align-items:center; justify-content:center;">
+                    <img src="{{ proj.img }}" alt="{{ proj.title }}" style="width:56px;height:56px;object-fit:contain;">
+                  </div>
+                  <div style="padding:var(--space-4);">
+                    <div class="card-title">{{ proj.title }}</div>
+                    <div class="card-body">{{ proj.desc }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="position:relative; z-index:1;">
+              <h2 style="font-family:var(--font-heading); font-size:19px; margin:0 0 var(--space-3) 0;">Contact</h2>
+              <div style="display:flex; gap:var(--space-3); flex-wrap:wrap;">
+                <a href="mailto:pbaishwarya27@gmail.com" class="btn btn-secondary">pbaishwarya27@gmail.com</a>
+                <a href="https://linkedin.com/in/aishwarya-pb" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+                <span class="tag tag-neutral">Bangalore, India</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BACK: SINGING PORTFOLIO -->
+        <div class="face face-back" style="position:absolute; inset:0; width:100%; opacity:{{ backOpacity }}; z-index:{{ backZ }}; pointer-events:{{ backPointer }};">
+          <div style="background:linear-gradient(160deg, var(--sing-800), var(--sing-900)); border-radius:var(--radius-lg); box-shadow:var(--shadow-lg); padding:var(--space-6); position:relative; overflow:hidden; color:white;">
+            <div class="note-blob" style="position:absolute; top:40px; right:220px; font-size:56px; opacity:0.18;">♪</div>
+            <div class="note-blob2" style="position:absolute; top:260px; right:60px; font-size:38px; opacity:0.16;">♫</div>
+            <div class="note-blob" style="position:absolute; bottom:80px; left:40%; font-size:44px; opacity:0.14; animation-delay:1.5s;">♬</div>
+            <div class="blob" style="position:absolute; top:-90px; left:-90px; width:280px; height:280px; border-radius:999px; background:var(--sing-800); opacity:0.45;"></div>
+            <div style="position:absolute; inset:0; background-image:repeating-linear-gradient(rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 34px); pointer-events:none;"></div>
+
+            <div class="vinyl" style="position:absolute; top:20px; right:24px; width:110px; height:110px; border-radius:999px; background:repeating-radial-gradient(circle, #1a1a1a 0px, #1a1a1a 4px, #2e2e2e 5px, #2e2e2e 8px); box-shadow:0 8px 24px rgba(0,0,0,0.35); display:flex; align-items:center; justify-content:center;">
+              <div style="width:26px; height:26px; border-radius:999px; background:var(--sing-200); border:3px solid #1a1a1a;"></div>
+            </div>
+
+            <div class="fade-in" style="position:relative; z-index:1; margin-bottom:var(--space-6);">
+              <div class="tag tag-outline" style="margin-bottom:var(--space-3); border-color:rgba(255,255,255,0.5); color:white;">Singing Portfolio</div>
+              <h1 style="font-family:var(--font-heading); font-size:32px; margin:0 0 4px 0;">nanna_dhwanii</h1>
+              <div style="font-size:15px; color:var(--sing-100); font-weight:700; margin-bottom:var(--space-3); display:flex; align-items:center; gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                Carnatic Classical Singer
+              </div>
+              <p style="font-size:15px; line-height:1.6; max-width:560px; color:rgba(255,255,255,0.92); margin:0;">
+                7 years of Carnatic classical training, singing across every genre — classical, film, sugama sangeetha and fusion.
+              </p>
+            </div>
+
+            <div class="fade-in" style="position:relative; z-index:1; display:grid; grid-template-columns:repeat(2,1fr); gap:var(--space-3); max-width:280px; margin-bottom:var(--space-6);">
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-heading); font-size:24px;">7+</div>
+                <div style="font-size:13px; color:rgba(255,255,255,0.8);">Years Trained</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-family:var(--font-heading); font-size:24px;">All</div>
+                <div style="font-size:13px; color:rgba(255,255,255,0.8);">Genres Sung</div>
+              </div>
+            </div>
+
+            <div style="position:relative; z-index:1; display:flex; align-items:flex-end; gap:5px; height:36px; margin-bottom:var(--space-4);">
+              <div class="eq-bar" style="width:5px; height:100%; border-radius:3px; background:var(--sing-100); animation-delay:0s;"></div>
+              <div class="eq-bar" style="width:5px; height:80%; border-radius:3px; background:var(--sing-100); animation-delay:0.15s;"></div>
+              <div class="eq-bar" style="width:5px; height:100%; border-radius:3px; background:var(--sing-100); animation-delay:0.3s;"></div>
+              <div class="eq-bar" style="width:5px; height:60%; border-radius:3px; background:var(--sing-100); animation-delay:0.45s;"></div>
+              <div class="eq-bar" style="width:5px; height:90%; border-radius:3px; background:var(--sing-100); animation-delay:0.6s;"></div>
+              <div class="eq-bar" style="width:5px; height:70%; border-radius:3px; background:var(--sing-100); animation-delay:0.75s;"></div>
+              <div class="eq-bar" style="width:5px; height:100%; border-radius:3px; background:var(--sing-100); animation-delay:0.9s;"></div>
+            </div>
+
+            <div style="position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:10px; margin-bottom:var(--space-6);">
+              <sc-for list="{{ genres }}" as="g" hint-placeholder-count="4">
+                <span class="tag" style="background:rgba(255,255,255,0.14); color:white; border:1px solid rgba(255,255,255,0.3); display:flex; align-items:center; gap:5px;">♪ {{ g }}</span>
+              </sc-for>
+            </div>
+
+            <div style="position:relative; z-index:1; display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:var(--space-4); margin-bottom:var(--space-6);">
+              <a href="https://www.instagram.com/nanna_dhwanii?igsi=dTN6dnNjZnIxbXlz" target="_blank" rel="noopener" onClick="{{ pauseAudio }}" class="card elev-md tilt-card" style="background:white; color:var(--color-neutral-900); text-decoration:none; display:flex; align-items:center; gap:var(--space-3);">
+                <div style="width:52px;height:52px;border-radius:999px;background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </div>
+                <div>
+                  <div class="card-title" style="margin:0; color:var(--color-neutral-900);">Instagram</div>
+                  <div class="card-meta" style="color:var(--color-neutral-600);">@nanna_dhwanii</div>
+                </div>
+              </a>
+              <a href="https://youtube.com/@aishwaryapb27?si=4gWLmphQ_zidHT70" target="_blank" rel="noopener" onClick="{{ pauseAudio }}" class="card elev-md tilt-card" style="background:white; color:var(--color-neutral-900); text-decoration:none; display:flex; align-items:center; gap:var(--space-3);">
+                <div style="width:52px;height:52px;border-radius:999px;background:#ff0000;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                </div>
+                <div>
+                  <div class="card-title" style="margin:0; color:var(--color-neutral-900);">YouTube</div>
+                  <div class="card-meta" style="color:var(--color-neutral-600);">@aishwaryapb27</div>
+                </div>
+              </a>
+            </div>
+
+            <div style="position:relative; z-index:1;">
+              <h2 style="font-family:var(--font-heading); font-size:19px; margin:0 0 var(--space-3) 0;">Contact</h2>
+              <div style="display:flex; gap:var(--space-3); flex-wrap:wrap;">
+                <a href="mailto:pbaishwarya27@gmail.com" class="btn" onClick="{{ pauseAudio }}" style="background:white; color:var(--sing-800);">pbaishwarya27@gmail.com</a>
+                <a href="https://www.instagram.com/nanna_dhwanii?igsi=dTN6dnNjZnIxbXlz" target="_blank" rel="noopener" onClick="{{ pauseAudio }}" class="btn btn-ghost" style="border-color:rgba(255,255,255,0.5); color:white;">Follow on Instagram</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;motionIntensity&quot;: {&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Full&quot;,&quot;options&quot;:[&quot;Full&quot;,&quot;Calm&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Feel&quot;},
+  &quot;swapAccents&quot;: {&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Feel&quot;},
+  &quot;autoFlip&quot;: {&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Feel&quot;}
+}">
+class Component extends DCLogic {
+  state = {
+    flipped: false,
+    faceFlipped: false,
+    barsIn: false,
+    darkMode: false,
+    skills: [
+      { name: "Playwright + TypeScript", pct: 95 },
+      { name: "Selenium (Java)", pct: 90 },
+      { name: "API Testing (Postman)", pct: 90 },
+      { name: "SQL + Unix", pct: 85 },
+      { name: "CI/CD (Jenkins)", pct: 80 },
+      { name: "Robot Framework", pct: 75 }
+    ],
+    projects: [
+      { img: "credit-risk.svg", title: "Global Credit Risk System", desc: "Automated counter-party alignment via CDN/SDP messages; validated on Unix & SQL for a banking platform." },
+      { img: "pams.svg", title: "PAMS – Political Activities", desc: "Web workflow for employee pre-clearance; test plans in HP ALM, defects in JIRA, 2-week releases." },
+      { img: "miles-more.svg", title: "Miles & More Credit Card", desc: "Playwright E2E for travel-card journeys; 30% faster regression, Jenkins CI integration." },
+      { img: "whiteboard.svg", title: "Whiteboard.chat", desc: "Cross-browser manual + automation for a real-time classroom whiteboard; Selenium & Robot Framework." }
+    ],
+    genres: ["Carnatic Classical", "Film / Playback", "Sugama Sangeetha", "Fusion"]
+  };
+
+  innerEl = null;
+  audioEl = null;
+
+  componentDidMount() {
+    this.applyTransform();
+    setTimeout(() => this.setState({ barsIn: true }), 300);
+    fetch("veena-music.mp3").then(r => r.blob()).then(blob => {
+      const url = URL.createObjectURL(blob);
+      if (this.audioEl) this.audioEl.src = url;
+    }).catch(() => {});
+    this.syncAutoFlip();
+    document.addEventListener("visibilitychange", this.handleVisibility);
+  }
+
+  componentDidUpdate() {
+    this.syncAutoFlip();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._autoFlipTimer);
+    document.removeEventListener("visibilitychange", this.handleVisibility);
+  }
+
+  syncAutoFlip() {
+    const wantsAuto = !!this.props.autoFlip;
+    if (wantsAuto && !this._autoFlipTimer) {
+      this._autoFlipTimer = setInterval(() => this.toggleFlip(), 6000);
+    } else if (!wantsAuto && this._autoFlipTimer) {
+      clearInterval(this._autoFlipTimer);
+      this._autoFlipTimer = null;
+    }
+  }
+
+  applyTransform() {
+    if (this.innerEl) {
+      this.innerEl.style.transform = this.state.flipped ? "rotateY(180deg)" : "rotateY(0deg)";
+    }
+  }
+
+  toggleDark = () => { this.setState(s => ({ darkMode: !s.darkMode })); };
+
+  pauseAudio = () => { if (this.audioEl) this.audioEl.pause(); };
+
+  handleVisibility = () => {
+    if (document.hidden) {
+      this.pauseAudio();
+    } else if (this.state.flipped && this.audioEl) {
+      this.audioEl.play().catch(() => {});
+    }
+  };
+
+  toggleFlip = () => {
+    this.setState(s => ({ flipped: !s.flipped }), () => {
+      this.applyTransform();
+      const nowFlipped = this.state.flipped;
+      if (!nowFlipped && this.audioEl) this.audioEl.pause();
+      clearTimeout(this._faceTimer);
+      this._faceTimer = setTimeout(() => {
+        this.setState({ faceFlipped: nowFlipped });
+      }, 575);
+      this._audioTimer = setTimeout(() => {
+        if (nowFlipped && this.audioEl) {
+          this.audioEl.volume = 0.5;
+          this.audioEl.play().catch(() => {});
+        }
+      }, 1150);
+    });
+  };
+
+  renderVals() {
+    const barsIn = this.state.barsIn;
+    return {
+      innerRef: (el) => { this.innerEl = el; if (el) this.applyTransform(); },
+      audioRef: (el) => { this.audioEl = el; },
+      toggleFlip: this.toggleFlip,
+      toggleDark: this.toggleDark,
+      pauseAudio: this.pauseAudio,
+      theme: this.state.darkMode ? "dark" : "light",
+      themeIcon: this.state.darkMode ? "☀" : "☾",
+      swapAttr: this.props.swapAccents ? "true" : "false",
+      motionAttr: (this.props.motionIntensity ?? "Full") === "Calm" ? "calm" : "full",
+      sideLabel: this.state.flipped ? "Singing portfolio" : "Technical resume",
+      flipButtonLabel: this.state.flipped ? "View tech resume" : "View singing side",
+      frontOpacity: this.state.faceFlipped ? 0 : 1,
+      frontPointer: this.state.faceFlipped ? "none" : "auto",
+      frontZ: this.state.faceFlipped ? 0 : 1,
+      backOpacity: this.state.faceFlipped ? 1 : 0,
+      backPointer: this.state.faceFlipped ? "auto" : "none",
+      backZ: this.state.faceFlipped ? 1 : 0,
+      skills: this.state.skills.map(s => ({ name: s.name, pct: s.pct, width: barsIn ? s.pct + "%" : "0%" })),
+      projects: this.state.projects,
+      genres: this.state.genres
+    };
+  }
+}
+
+</script>
+</body>
+</html>
