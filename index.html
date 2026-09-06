@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aishwarya P B — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --font-heading:'Fraunces', serif;
+    --font-body:'Inter', sans-serif;
+    --radius-lg:26px;
+    --radius-md:16px;
+    --space-3:14px; --space-4:20px; --space-6:32px;
+    --shadow-md:0 10px 26px -10px rgba(30,20,10,.25);
+    --shadow-lg:0 26px 60px -20px rgba(30,20,10,.32);
+
+    /* tech accent (indigo/teal) */
+    --accent-100:#e6e7fd; --accent-300:#a8abf7; --accent-400:#7477ef;
+    --accent-500:#4f46e5; --accent-600:#4038c9; --accent-700:#332da0;
+    --accent2-100:#d7f6f7; --accent2-400:#2fc3cf; --accent2-600:#0ea5b7;
+
+    /* singing accent (maroon/amber) */
+    --sing-100:#fde3cf; --sing-200:#fbcfa0; --sing-800:#7c2d12; --sing-900:#48170a;
+
+    --color-bg:#faf7f3;
+    --color-text:#221f1d;
+    --surface:#ffffff;
+    --label-color:#726b62;
+    --body-color:#4d473f;
+    --track-bg:#efeae3;
+  }
+  html[data-theme="dark"]{
+    --color-bg:#17140f;
+    --color-text:#f2ede6;
+    --surface:#241f19;
+    --label-color:#b8ada0;
+    --body-color:#d8cfc4;
+    --track-bg:#332c24;
+  }
+  *,*::before,*::after{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;transition:background .4s ease,color .4s ease;
+  }
+  img{max-width:100%;display:block;}
+
+  @keyframes floatSlow{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-16px) rotate(6deg);}}
+  @keyframes floatSlow2{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(14px) rotate(-8deg);}}
+  @keyframes blobPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes ringPulse{0%{box-shadow:0 0 0 0 rgba(79,70,229,.4);}100%{box-shadow:0 0 0 16px rgba(79,70,229,0);}}
+  @keyframes shimmer{0%{background-position:0% 50%;}100%{background-position:200% 50%;}}
+  @keyframes vinylSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+  @keyframes eqBounce{0%,100%{transform:scaleY(.3);}50%{transform:scaleY(1);}}
+
+  .blob{position:absolute;border-radius:999px;animation:blobPulse 8s ease-in-out infinite;}
+  .note{position:absolute;opacity:.18;}
+  .fade-in{animation:fadeUp .7s ease both;}
+  .tilt-card{transition:transform .35s ease,box-shadow .35s ease;}
+  .tilt-card:hover{transform:translateY(-6px) scale(1.02);}
+  .grad-text{
+    background:linear-gradient(100deg,var(--accent-600),var(--accent2-600),var(--accent-600));
+    background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:shimmer 5s linear infinite;
+  }
+  .skill-track{position:relative;height:9px;border-radius:999px;background:var(--track-bg);overflow:hidden;}
+  .skill-fill{position:absolute;top:0;left:0;height:100%;border-radius:999px;width:0;
+    background:linear-gradient(90deg,var(--accent-400),var(--accent-600));transition:width 1.2s cubic-bezier(.2,.8,.2,1);}
+  .vinyl{animation:vinylSpin 6s linear infinite;}
+  .eq-bar{animation:eqBounce 1.1s ease-in-out infinite;transform-origin:bottom;}
+
+  .tag{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;letter-spacing:.6px;
+    text-transform:uppercase;padding:6px 14px;border-radius:999px;}
+  .tag-accent{background:var(--accent-100);color:var(--accent-700);}
+  .tag-outline{border:1px solid rgba(255,255,255,.5);color:#fff;}
+  .tag-neutral{background:var(--track-bg);color:var(--label-color);text-transform:none;font-weight:600;letter-spacing:0;}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;font-weight:700;
+    font-size:14px;text-decoration:none;border:1px solid transparent;transition:transform .25s ease,box-shadow .25s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-secondary{background:var(--accent-100);color:var(--accent-700);}
+  .btn-ghost{background:transparent;border-color:var(--track-bg);color:var(--color-text);}
+
+  .page-wrap{max-width:1180px;margin:0 auto;padding:var(--space-6) var(--space-4) 60px;}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-6);}
+  .topbar-left{display:flex;align-items:center;gap:14px;}
+  .brand-name{font-family:var(--font-heading);font-size:18px;line-height:1.2;}
+  .side-label{font-size:13px;color:var(--label-color);}
+  .topbar-right{display:flex;align-items:center;gap:12px;}
+
+  .theme-toggle-btn{
+    display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;
+    border:2px solid var(--accent-300);background:var(--surface);color:var(--accent-700);font-size:18px;
+    cursor:pointer;transition:background .3s ease;
+  }
+  .theme-toggle-btn:hover{background:var(--accent-100);}
+
+  .flip-btn-wrap{position:relative;}
+  .flip-btn-ring{position:absolute;inset:0;border-radius:999px;pointer-events:none;animation:ringPulse 2.4s ease-out infinite;}
+  .flip-btn{
+    position:relative;display:flex;align-items:center;gap:8px;border:none;cursor:pointer;
+    background:var(--accent-500);color:#fff;font-family:var(--font-body);font-weight:700;font-size:14.5px;
+    padding:13px 24px;border-radius:999px;box-shadow:var(--shadow-md);transition:background .25s ease,transform .2s ease;
+  }
+  .flip-btn:hover{background:var(--accent-600);transform:translateY(-2px);}
+  .flip-btn:active{background:var(--accent-700);}
+  .flip-btn .icon{font-size:18px;display:inline-block;transition:transform .5s ease;}
+
+  .stage-wrap{width:100%;perspective:2600px;}
+  .flip-inner{position:relative;width:100%;min-height:1180px;transform-style:preserve-3d;
+    transition:transform 1.1s cubic-bezier(.65,.05,.24,1);}
+  .flip-inner.flipped{transform:rotateY(180deg);}
+
+  .face{position:absolute;inset:0;width:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+  .face-back{transform:rotateY(180deg);}
+  .flip-inner:not(.flipped) .face-back{pointer-events:none;}
+  .flip-inner.flipped .face-front{pointer-events:none;}
+
+  .card-shell{border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:var(--space-6);position:relative;overflow:hidden;}
+  .face-front .card-shell{background:var(--surface);color:var(--color-text);}
+  .face-back .card-shell{background:linear-gradient(160deg,var(--sing-800),var(--sing-900));color:#fff;}
+
+  h1.hero-title{font-family:var(--font-heading);font-size:32px;margin:0 0 8px;}
+  .hero-role{font-size:16px;font-weight:700;margin-bottom:var(--space-3);}
+  .face-front .hero-role{color:var(--accent-700);}
+  .face-back .hero-role{color:var(--sing-100);display:flex;align-items:center;gap:8px;}
+  .hero-bio{font-size:15px;line-height:1.6;max-width:560px;margin:0;}
+  .face-front .hero-bio{color:var(--body-color);}
+  .face-back .hero-bio{color:rgba(255,255,255,.92);}
+
+  .stat-row{position:relative;z-index:1;display:grid;gap:var(--space-3);margin-bottom:var(--space-6);}
+  .stat-row.tech{grid-template-columns:repeat(3,1fr);max-width:420px;}
+  .stat-row.sing{grid-template-columns:repeat(2,1fr);max-width:280px;}
+  .stat b{display:block;font-family:var(--font-heading);font-size:24px;}
+  .face-front .stat b{color:var(--accent-600);}
+  .stat span{font-size:13px;}
+  .face-front .stat span{color:var(--label-color);}
+  .face-back .stat span{color:rgba(255,255,255,.8);}
+  .stat{text-align:center;}
+
+  h2.section-title{font-family:var(--font-heading);font-size:19px;margin:0 0 var(--space-4);}
+
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--space-4);}
+  .skill-top{display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin-bottom:6px;}
+  .skill-top span:last-child{color:var(--accent-600);}
+
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4);}
+  .project-card{border-radius:var(--radius-md);overflow:hidden;background:var(--surface);box-shadow:0 4px 14px -8px rgba(0,0,0,.18);border:1px solid var(--track-bg);}
+  .project-thumb{height:100px;background:var(--accent2-100);display:flex;align-items:center;justify-content:center;}
+  .project-thumb img{width:48px;height:48px;object-fit:contain;}
+  .project-body{padding:var(--space-4);}
+  .project-body .t{font-weight:700;font-size:15px;margin-bottom:6px;}
+  .project-body .d{font-size:13.5px;color:var(--body-color);margin:0;}
+
+  .genre-row{display:flex;flex-wrap:wrap;gap:10px;}
+  .genre-pill{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.3);
+    display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;padding:8px 16px;border-radius:999px;}
+
+  .social-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4);}
+  .social-card{background:#fff;color:#221f1d;text-decoration:none;display:flex;align-items:center;gap:14px;
+    border-radius:var(--radius-md);padding:16px;box-shadow:0 10px 26px -12px rgba(0,0,0,.35);transition:transform .3s ease;}
+  .social-card:hover{transform:translateY(-4px);}
+  .social-badge{width:48px;height:48px;border-radius:999px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .social-card .t{font-weight:700;font-size:14.5px;}
+  .social-card .m{font-size:12.5px;color:#726b62;}
+
+  .contact-row{display:flex;gap:var(--space-3);flex-wrap:wrap;}
+
+  footer{text-align:center;font-size:13px;color:var(--label-color);padding:34px 0 10px;}
+
+  @media (max-width:720px){
+    .flip-inner{min-height:2000px;}
+    .card-shell{padding:24px;}
+    h1.hero-title{font-size:27px;}
+    .stat-row.tech{max-width:none;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .blob,.note,.tilt-card:hover,.grad-text,.vinyl,.eq-bar,.flip-btn-ring{animation:none !important;}
+    .flip-inner{transition:none;}
+  }
+
+  /* interactive dot-grid background */
+  #bg-canvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block;}
+  .page-wrap{position:relative;z-index:1;}
+  @media (prefers-reduced-motion: reduce){ #bg-canvas{display:none;} }
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="page-wrap">
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <div>
+        <div class="brand-name">Aishwarya P B</div>
+        <div class="side-label" id="side-label">Technical resume</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle dark mode"><span id="theme-icon">☾</span></button>
+      <div class="flip-btn-wrap">
+        <div class="flip-btn-ring"></div>
+        <button class="flip-btn" id="flip-btn">
+          <span id="flip-label">View singing side</span>
+          <span class="icon">⟲</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stage-wrap">
+    <div class="flip-inner" id="flip-inner">
+
+      <!-- FRONT: TECH RESUME -->
+      <div class="face face-front">
+        <div class="card-shell">
+          <div class="blob" style="top:-70px;right:-70px;width:240px;height:240px;background:var(--accent-100);opacity:.7;"></div>
+          <div class="blob" style="bottom:120px;left:-50px;width:140px;height:140px;background:var(--accent2-100);opacity:.6;animation-delay:2s;"></div>
+
+          <div class="fade-in" style="position:relative;z-index:1;margin-bottom:var(--space-6);">
+            <div class="tag tag-accent" style="margin-bottom:var(--space-3);">Technical Portfolio</div>
+            <h1 class="hero-title grad-text">Aishwarya P B</h1>
+            <div class="hero-role">QA Engineer · Automation &amp; Manual Testing</div>
+            <p class="hero-bio">6+ years delivering zero-defect releases across banking, insurance, airline and ed-tech platforms — Playwright, Selenium, TypeScript, API and CI/CD testing.</p>
+          </div>
+
+          <div class="stat-row tech fade-in">
+            <div class="stat"><b>6+</b><span>Years</span></div>
+            <div class="stat"><b>7+</b><span>Projects</span></div>
+            <div class="stat"><b>4</b><span>Mentored</span></div>
+          </div>
+
+          <div style="position:relative;z-index:1;margin-bottom:var(--space-6);">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-grid" id="skills-grid"></div>
+          </div>
+
+          <div style="position:relative;z-index:1;margin-bottom:var(--space-6);">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-grid">
+              <div class="project-card tilt-card">
+                <div class="project-thumb"><img src="credit-risk.svg" alt=""></div>
+                <div class="project-body"><div class="t">Global Credit Risk System</div><p class="d">Automated counter-party alignment via CDN/SDP messages; validated on Unix &amp; SQL for a banking platform.</p></div>
+              </div>
+              <div class="project-card tilt-card">
+                <div class="project-thumb"><img src="pams.svg" alt=""></div>
+                <div class="project-body"><div class="t">PAMS – Political Activities</div><p class="d">Web workflow for employee pre-clearance; test plans in HP ALM, defects in JIRA, 2-week releases.</p></div>
+              </div>
+              <div class="project-card tilt-card">
+                <div class="project-thumb"><img src="miles-more.svg" alt=""></div>
+                <div class="project-body"><div class="t">Miles &amp; More Credit Card</div><p class="d">Playwright E2E for travel-card journeys; 30% faster regression, Jenkins CI integration.</p></div>
+              </div>
+              <div class="project-card tilt-card">
+                <div class="project-thumb"><img src="whiteboard.svg" alt=""></div>
+                <div class="project-body"><div class="t">Whiteboard.chat</div><p class="d">Cross-browser manual + automation for a real-time classroom whiteboard; Selenium &amp; Robot Framework.</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="position:relative;z-index:1;">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact-row">
+              <a href="mailto:pbaishwarya27@gmail.com" class="btn btn-secondary">pbaishwarya27@gmail.com</a>
+              <a href="https://linkedin.com/in/aishwarya-pb" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+              <span class="tag tag-neutral">Bangalore, India</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BACK: SINGING PORTFOLIO -->
+      <div class="face face-back">
+        <div class="card-shell">
+          <div class="note" style="top:40px;right:220px;font-size:56px;animation:floatSlow 7s ease-in-out infinite;">♪</div>
+          <div class="note" style="top:260px;right:60px;font-size:38px;opacity:.16;animation:floatSlow2 6s ease-in-out infinite;">♫</div>
+          <div class="note" style="bottom:80px;left:40%;font-size:44px;opacity:.14;animation:floatSlow 7s ease-in-out infinite 1.5s;">♬</div>
+          <div class="blob" style="top:-90px;left:-90px;width:280px;height:280px;background:var(--sing-800);opacity:.45;"></div>
+          <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(rgba(255,255,255,.05) 0px,rgba(255,255,255,.05) 2px,transparent 2px,transparent 34px);pointer-events:none;"></div>
+
+          <div class="vinyl" style="position:absolute;top:20px;right:24px;width:100px;height:100px;border-radius:999px;background:repeating-radial-gradient(circle,#1a1a1a 0px,#1a1a1a 4px,#2e2e2e 5px,#2e2e2e 8px);box-shadow:0 8px 24px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;">
+            <div style="width:24px;height:24px;border-radius:999px;background:var(--sing-200);border:3px solid #1a1a1a;"></div>
+          </div>
+
+          <div class="fade-in" style="position:relative;z-index:1;margin-bottom:var(--space-6);">
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:var(--space-3);">
+              <div class="tag tag-outline" style="margin:0;">Singing Portfolio</div>
+              <button id="music-btn" type="button" style="display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);color:#fff;font-family:var(--font-body);font-weight:700;font-size:12.5px;padding:7px 14px;border-radius:999px;cursor:pointer;">
+                <span id="music-icon">▶</span><span id="music-label">Play music</span>
+              </button>
+            </div>
+            <h1 class="hero-title">nanna_dhwanii</h1>
+            <div class="hero-role">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+              Carnatic Classical Singer
+            </div>
+            <p class="hero-bio">7 years of Carnatic classical training, singing across every genre — classical, film, sugama sangeetha and fusion.</p>
+          </div>
+
+          <div class="stat-row sing fade-in">
+            <div class="stat"><b>7+</b><span>Years Trained</span></div>
+            <div class="stat"><b>All</b><span>Genres Sung</span></div>
+          </div>
+
+          <div id="eq-row" style="position:relative;z-index:1;display:flex;align-items:flex-end;gap:5px;height:36px;margin-bottom:var(--space-4);">
+            <div class="eq-bar" style="width:5px;height:100%;border-radius:3px;background:var(--sing-100);animation-delay:0s;"></div>
+            <div class="eq-bar" style="width:5px;height:80%;border-radius:3px;background:var(--sing-100);animation-delay:.15s;"></div>
+            <div class="eq-bar" style="width:5px;height:100%;border-radius:3px;background:var(--sing-100);animation-delay:.3s;"></div>
+            <div class="eq-bar" style="width:5px;height:60%;border-radius:3px;background:var(--sing-100);animation-delay:.45s;"></div>
+            <div class="eq-bar" style="width:5px;height:90%;border-radius:3px;background:var(--sing-100);animation-delay:.6s;"></div>
+            <div class="eq-bar" style="width:5px;height:70%;border-radius:3px;background:var(--sing-100);animation-delay:.75s;"></div>
+            <div class="eq-bar" style="width:5px;height:100%;border-radius:3px;background:var(--sing-100);animation-delay:.9s;"></div>
+          </div>
+
+          <div class="genre-row" style="position:relative;z-index:1;margin-bottom:var(--space-6);">
+            <span class="genre-pill">♪ Carnatic Classical</span>
+            <span class="genre-pill">♪ Film / Playback</span>
+            <span class="genre-pill">♪ Sugama Sangeetha</span>
+            <span class="genre-pill">♪ Fusion</span>
+          </div>
+
+          <div class="social-grid" style="position:relative;z-index:1;margin-bottom:var(--space-6);">
+            <a href="https://instagram.com/nanna_dhwanii" target="_blank" rel="noopener" class="social-card tilt-card">
+              <div class="social-badge" style="background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              </div>
+              <div><div class="t">Instagram</div><div class="m">@nanna_dhwanii</div></div>
+            </a>
+            <a href="https://youtube.com/@aishwaryapb27" target="_blank" rel="noopener" class="social-card tilt-card">
+              <div class="social-badge" style="background:#ff0000;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+              </div>
+              <div><div class="t">YouTube</div><div class="m">@aishwaryapb27</div></div>
+            </a>
+          </div>
+
+          <div style="position:relative;z-index:1;">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact-row">
+              <a href="mailto:pbaishwarya27@gmail.com" class="btn" style="background:#fff;color:var(--sing-800);">pbaishwarya27@gmail.com</a>
+              <a href="https://instagram.com/nanna_dhwanii" target="_blank" rel="noopener" class="btn btn-ghost" style="border-color:rgba(255,255,255,.5);color:#fff;">Follow on Instagram</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>&copy; <span id="year"></span> Aishwarya P B — built with care.</footer>
+</div>
+
+<audio id="bgm" src="veena-music.mp3" preload="none" loop></audio>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // build skill bars
+  const SKILLS = [
+    { name: "Playwright + TypeScript", pct: 95 },
+    { name: "Selenium (Java)", pct: 90 },
+    { name: "API Testing (Postman)", pct: 90 },
+    { name: "SQL + Unix", pct: 85 },
+    { name: "CI/CD (Jenkins)", pct: 80 },
+    { name: "Robot Framework", pct: 75 }
+  ];
+  const skillsGrid = document.getElementById('skills-grid');
+  skillsGrid.innerHTML = SKILLS.map(s => `
+    <div>
+      <div class="skill-top"><span>${s.name}</span><span>${s.pct}%</span></div>
+      <div class="skill-track"><div class="skill-fill" data-pct="${s.pct}"></div></div>
+    </div>
+  `).join('');
+  setTimeout(() => {
+    document.querySelectorAll('.skill-fill').forEach(el => { el.style.width = el.dataset.pct + '%'; });
+  }, 300);
+
+  // theme toggle
+  const themeBtn = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  themeBtn.addEventListener('click', () => {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', dark ? 'light' : 'dark');
+    themeIcon.textContent = dark ? '☾' : '☀';
+  });
+
+  // flip logic
+  const flipInner = document.getElementById('flip-inner');
+  const flipBtn = document.getElementById('flip-btn');
+  const flipLabel = document.getElementById('flip-label');
+  const sideLabel = document.getElementById('side-label');
+  const bgm = document.getElementById('bgm');
+  const musicBtn = document.getElementById('music-btn');
+  const musicIcon = document.getElementById('music-icon');
+  const musicLabel = document.getElementById('music-label');
+  bgm.volume = 0.5;
+  let flipped = false;
+
+  function setMusicUI(playing){
+    musicIcon.textContent = playing ? '❚❚' : '▶';
+    musicLabel.textContent = playing ? 'Playing…' : 'Play music';
+  }
+
+  function tryPlay(){
+    const p = bgm.play();
+    if (p && p.then) {
+      p.then(() => setMusicUI(true)).catch((err) => {
+        setMusicUI(false);
+        console.warn('Audio autoplay was blocked, tap "Play music" manually:', err && err.name, err && err.message);
+      });
+    } else {
+      setMusicUI(true);
+    }
+  }
+
+  flipBtn.addEventListener('click', () => {
+    flipped = !flipped;
+    flipInner.classList.toggle('flipped', flipped);
+    flipLabel.textContent = flipped ? 'View tech resume' : 'View singing side';
+    sideLabel.textContent = flipped ? 'Singing portfolio' : 'Technical resume';
+
+    // Call play()/pause() synchronously inside the click handler itself —
+    // browsers (Safari especially) only allow audio playback tied directly
+    // to a user gesture. If the browser still blocks the automatic attempt,
+    // the "Play music" button on the singing side is a guaranteed fallback.
+    if (!flipped) {
+      bgm.pause();
+      setMusicUI(false);
+    } else {
+      tryPlay();
+    }
+  });
+
+  musicBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (bgm.paused) tryPlay();
+    else { bgm.pause(); setMusicUI(false); }
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      bgm.pause();
+    } else if (flipped && bgm.currentTime > 0 && bgm.ended === false) {
+      tryPlay();
+    }
+  });
+
+  // pause audio when leaving via social/contact links on the back face (but not the music button itself)
+  document.querySelectorAll('.face-back a[href]').forEach(a => {
+    a.addEventListener('click', () => { bgm.pause(); setMusicUI(false); });
+  });
+
+  // --- interactive dot-grid background: a grid of dots covering the page that
+  // light up / grow near the mouse, like a subtle radar ping following the cursor.
+  // Disabled under prefers-reduced-motion (canvas is hidden via CSS in that case).
+  (function initBgCanvas(){
+    const canvas = document.getElementById('bg-canvas');
+    if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ctx = canvas.getContext('2d');
+
+    const SPACING = 30;
+    const RADIUS = 160;      // how far the mouse influence reaches, in px
+    const BASE_R = 1.1;      // resting dot radius
+    const MAX_R = 3.4;       // dot radius right under the cursor
+
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let w = 0, h = 0, points = [];
+    let mouseX = -9999, mouseY = -9999;
+    let targetX = -9999, targetY = -9999;
+
+    function accentColor(){
+      const cs = getComputedStyle(document.documentElement);
+      return (cs.getPropertyValue('--accent-500') || '#4f46e5').trim();
+    }
+    function dotColor(){
+      return document.documentElement.getAttribute('data-theme') === 'dark'
+        ? 'rgba(255,255,255,.16)' : 'rgba(34,31,29,.14)';
+    }
+
+    function buildGrid(){
+      points = [];
+      for (let x = SPACING / 2; x < w; x += SPACING){
+        for (let y = SPACING / 2; y < h; y += SPACING){
+          points.push({ x, y });
+        }
+      }
+    }
+
+    function resize(){
+      w = window.innerWidth; h = window.innerHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      buildGrid();
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    window.addEventListener('mousemove', (e) => { targetX = e.clientX; targetY = e.clientY; });
+    window.addEventListener('mouseleave', () => { targetX = -9999; targetY = -9999; });
+
+    function draw(){
+      mouseX += (targetX - mouseX) * 0.15;
+      mouseY += (targetY - mouseY) * 0.15;
+      ctx.clearRect(0, 0, w, h);
+      const accent = accentColor();
+      const base = dotColor();
+
+      for (const p of points){
+        const dx = p.x - mouseX, dy = p.y - mouseY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const t = Math.max(0, 1 - dist / RADIUS);
+        const r = BASE_R + (MAX_R - BASE_R) * t;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = t > 0.02 ? accent : base;
+        ctx.globalAlpha = t > 0.02 ? 0.15 + t * 0.55 : 1;
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  })();
+</script>
+
+</body>
+</html>
